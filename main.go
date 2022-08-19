@@ -2,6 +2,7 @@ package main
 
 import (
 	"container/heap"
+	"fmt"
 )
 
 type Empleado struct {
@@ -62,5 +63,23 @@ func (pq *PriorityQueue) update(empleado *Empleado, nombre string, direccion str
 }
 
 func main() {
+	ListaEmpleado := []*Empleado{{nombre: "Maria", direccion: "Cerro Brujo Honduras", fecha: "01-enero-1965", salario: 5000, categoria: "mantenimiento", dni: "0101-honduras-1965"},
+		{nombre: "Juan", direccion: "Long Beach FLorida USA", fecha: "08-febrero-1965", salario: 4000, categoria: "conserje", dni: "0802-USA-1965"},
+		{nombre: "Soraya", direccion: "Amapala Honduras", fecha: "07-marzo-1965", salario: 15000, categoria: "CEO", dni: "0703-honduras-1965"}}
 
+	pq := make(PriorityQueue, len(ListaEmpleado))
+
+	for i, empleado := range ListaEmpleado {
+
+		pq[i] = empleado
+		pq[i].index = i
+
+	}
+
+	heap.Init(&pq)
+
+	for pq.Len() > 0 {
+		empleado := heap.Pop(&pq).(*Empleado)
+		fmt.Println("NOMBRE: ", empleado.nombre, "DIRECCION:", empleado.direccion, " FECHA DE NACIMIMENTO: ", empleado.fecha, "SALARIO: ", empleado.salario, " CATEGORIA: ", empleado.categoria, "DNI: ", empleado.dni)
+	}
 }
